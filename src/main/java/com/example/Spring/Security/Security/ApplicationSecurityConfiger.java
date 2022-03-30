@@ -13,16 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class ApplicationSecurityConfiger extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
-
     @Autowired
-    public ApplicationSecurityConfiger(PasswordEncoder passwordEncoder) {
-       this.passwordEncoder = passwordEncoder;
-    }
+    private  PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
 
         http
                 .authorizeRequests()
@@ -41,7 +36,7 @@ public class ApplicationSecurityConfiger extends WebSecurityConfigurerAdapter {
         auth
                 .inMemoryAuthentication()
                 .withUser("taj")
-                .password("password")
+                .password(passwordEncoder.encode("password"))
                 .roles("STUDENT");
 
 
