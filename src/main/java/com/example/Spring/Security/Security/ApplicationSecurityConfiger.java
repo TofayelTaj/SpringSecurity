@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.example.Spring.Security.Security.ApplicationUserRole.ADMIN;
+import static com.example.Spring.Security.Security.ApplicationUserRole.STUDENT;
+
 
 @Configuration
 @EnableWebSecurity
@@ -20,13 +23,20 @@ public class ApplicationSecurityConfiger extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "index")
+                .antMatchers("/", "index", "login")
                 .permitAll()
+                .antMatchers("/api/**")
+                .hasRole(STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+//                .httpBasic();
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/dashboard");
 
     }
 
@@ -37,7 +47,11 @@ public class ApplicationSecurityConfiger extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("taj")
                 .password(passwordEncoder.encode("password"))
-                .roles("STUDENT");
+                .roles("STUDENT")
+                .and()
+                .withUser("tofayel")
+                .password(passwordEncoder.encode("password"))
+                .roles(ADMIN.name());
 
 
     }
