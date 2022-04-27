@@ -19,6 +19,10 @@ public class ViewController {
     }
 
 
+    @GetMapping("/register")
+    public String registerNewUser(){
+        return "register";
+    }
 
 
 

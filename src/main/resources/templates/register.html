@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+
+</head>
+
+<body>
+
+
+<h1>Register page</h1>
+
+
+<form th:action="@{/signup}" method="post">
+
+    <input type="text" name="name" placeholder="User Name "> <br>
+    <input type="password" name="password" placeholder="User Password">
+    <input type="hidden" name="role" value="ROLE_STUDENT">
+    <input type="submit">
+</form>
+
+
+
+</body>
+
+</html>
